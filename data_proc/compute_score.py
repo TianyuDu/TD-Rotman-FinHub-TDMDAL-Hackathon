@@ -31,16 +31,18 @@ def get_transcript_LMD_score(
     """
     Compute sentiment for each body.
     """
+    # Combine body.
     sentence = " ".join(body)
     counts = dict((k, 0) for k in LMD_hash.keys())
+    # Tokenize.
     tokens = nltk.word_tokenize(sentence)
     lemmatizer = WordNetLemmatizer()
-    for k in counts.keys():
+    for word_type in counts.keys():
         for w in tokens:
             w = w.lower()
             c = lemmatizer.lemmatize(w)
-            if c.upper() in LMD_hash[k]:
-                counts[k] += 1
+            if c.upper() in LMD_hash[word_type]:
+                counts[word_type] += 1
     return counts
 
 
