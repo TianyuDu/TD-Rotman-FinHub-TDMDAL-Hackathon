@@ -79,11 +79,10 @@ def training_pipeline(
         val_perf_lst["loss"].append(val_loss)
 
     # Compute average.
-    train_perf, val_perf = dict(), dict()
-
-    for k, v in train_perf_lst.items():
-        train_perf[k] = np.mean(v)
-
-    for k, v in val_perf_lst.items():
-        val_perf[k] = np.mean(v)
-    return train_perf, val_perf
+    perf = {
+        "train_acc": np.mean(train_perf_lst["directional_accuracy"]),
+        "train_loss": np.mean(train_perf_lst["loss"]),
+        "val_acc": np.mean(val_perf_lst["directional_accuracy"]),
+        "val_loss": np.mean(val_perf_lst["loss"]),
+    }
+    return pref
