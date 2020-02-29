@@ -70,7 +70,7 @@ if __name__ == "__main__":
     model = rf = RandomForestRegressor()
     rf_random = RandomizedSearchCV(
         estimator=model, param_distributions=random_grid,
-        n_iter=100,
+        n_iter=500,
         scoring={
             'neg_mean_squared_error': 'neg_mean_squared_error',
             'acc': make_scorer(directional_accuracy)
