@@ -11,6 +11,10 @@ from sklearn.svm import SVR
 from sklearn import metrics
 
 
+def directional_accuracy(y_true, y_pred):
+    return float(np.mean(np.sign(y_true) == np.sign(y_pred)))
+
+
 def data_feed(path: str) -> Tuple[np.ndarray]:
     df = pd.read_csv(path)
     print("Number of transcripts with missing data:")

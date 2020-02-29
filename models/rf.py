@@ -8,9 +8,11 @@ import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
 
 from grid_search_util import profile_generator, grid_search
-from training_utils import data_feed, training_pipeline
+from training_utils import data_feed, training_pipeline, directional_accuracy
+
 
 from sklearn.model_selection import RandomizedSearchCV
+from sklearn.metrics import make_scorer
 
 
 def construct_model(
@@ -34,17 +36,17 @@ if __name__ == "__main__":
     bootstrap = [True, False]
 
     # ==== Smaller Profile ====
-    # n_estimators = [10]
-    # max_features = ['auto', 'sqrt']
-    # # Maximum number of levels in tree
-    # max_depth = [10]
-    # max_depth.append(None)
-    # # Minimum number of samples required to split a node
-    # min_samples_split = [10]
-    # # Minimum number of samples required at each leaf node
-    # min_samples_leaf = [1]
-    # # Method of selecting samples for training each tree
-    # bootstrap = [True]
+    n_estimators = [10]
+    max_features = ['auto', 'sqrt']
+    # Maximum number of levels in tree
+    max_depth = [10]
+    max_depth.append(None)
+    # Minimum number of samples required to split a node
+    min_samples_split = [10]
+    # Minimum number of samples required at each leaf node
+    min_samples_leaf = [1]
+    # Method of selecting samples for training each tree
+    bootstrap = [True]
 
     # Create the random grid
     random_grid = {
@@ -68,12 +70,17 @@ if __name__ == "__main__":
     model = rf = RandomForestRegressor()
     rf_random = RandomizedSearchCV(
         estimator=model, param_distributions=random_grid,
-        n_iter=100, scoring='neg_mean_squared_error',
+        n_iter=100,
+        scoring={
+            'neg_mean_squared_error': 'neg_mean_squared_error',
+            'acc': make_scorer(directional_accuracy)
+        },
         cv=5, verbose=2, random_state=42, n_jobs=-1,
-        return_train_score=True
+        return_train_score=True,
+        refit=False
     )
     X, y = data_feed(DATA_PATH)
     rf_random.fit(X, y)
     print("======== Best Parameter ========")
-    print(rf_random.best_params_)
+    # print(rf_random.best_params_)
     pd.DataFrame.from_dict(rf_random.cv_results_).to_csv("./rf_results.csv")
