@@ -16,7 +16,7 @@ def load_individual_transcript(
     path = TRANSCRIPT_DIR,
     subset: List[str] = None
 ) -> dict:
-    path = TRANSCRIPT_DIR + company + ".json"
+    path = path + company + ".json"
     with open(path, "r") as f:
         data = json.load(f)
     return data
