@@ -29,7 +29,8 @@ def get_transcript_LMD_score(
     body: list
 ) -> np.ndarray:
     """
-    Compute sentiment for each body.
+    Compute sentiment for each body paragraph.
+    Returns a dictionary of six values.
     """
     # Combine body.
     sentence = " ".join(body)
