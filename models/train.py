@@ -12,7 +12,7 @@ if __name__ == "__main__":
     (X, y) = data_feed(path=DATA_PATH)
     config = dict()
     model = construct_model(config)
-    train_perf, val_perf = training_pipeline(
+    perf = training_pipeline(
         model,
         data=(X, y),
         num_fold=10

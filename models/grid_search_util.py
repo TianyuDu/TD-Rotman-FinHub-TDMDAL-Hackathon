@@ -1,3 +1,4 @@
+import numpy as np
 import itertools
 from typing import Dict, List
 
@@ -19,31 +20,32 @@ def profile_generator(scope: Dict[str, List]) -> List[dict]:
 
 
 def grid_search(
-        scope: dict,
-        data_feed: callable,
-        train_main: callable,
-        log_dir: str = "./grid_result.csv",
+    scope: dict,
+    model_constructor: callable,
+    data: List[np.ndarray],
+    training_pipeline: callable,
+    log_dir: str = "./grid_result.csv",
 ) -> None:
     header_written = False
     with open(log_dir, "w") as f:
         profile_set = profile_generator(scope)
         total_profiles = len(profile_set)
         for (i, profile) in enumerate(profile_set):
-            print("**** Profile: [{}/{}] ****".format(i+1, total_profiles))
-            print(profile)
+            print("**** Profile: [{}/{}] ****".format(i + 1, total_profiles))
             print("Training model...")
-            result_lst = train_main(data_feed, **profile)
+            model = model_constructor(profile)
+            perf = training_pipeline(model, data, num_fold=5)
+            perf.update(profile)
             print("Done, training results: ")
-            for result in result_lst:
-                print(result)
-                if not header_written:
-                    f.write("RUN,")
-                    f.write(",".join(result.keys()))
-                    f.write("\n")
-                    header_written = True
-                f.write(str(i)+",")
-                f.write(",".join(
-                    [str(x).replace(",", ";") for x in result.values()]
-                ))
+            print(perf)
+            if not header_written:
+                f.write("RUN,")
+                f.write(",".join(perf.keys()))
                 f.write("\n")
+                header_written = True
+            f.write(str(i) + ",")
+            f.write(",".join(
+                [str(x).replace(",", ";") for x in perf.values()]
+            ))
+            f.write("\n")
     print("Log stored to {}".format(log_dir))
