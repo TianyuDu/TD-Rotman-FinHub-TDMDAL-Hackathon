@@ -12,4 +12,12 @@ if __name__ == "__main__":
     (X, y) = data_feed(path=DATA_PATH)
     config = dict()
     model = construct_model(config)
-    result = training_pipeline(model, data=(X, y))
+    train_perf, val_perf = training_pipeline(
+        model,
+        data=(X, y),
+        num_fold=5
+    )
+    print("Training Performance:")
+    print(train_perf)
+    print("Validation Performance:")
+    print(val_perf)

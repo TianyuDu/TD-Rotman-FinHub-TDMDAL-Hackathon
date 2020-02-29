@@ -45,7 +45,8 @@ def training_pipeline(
     # ==== Data Preprocessing ====
     X_train_raw, y_train_raw = data
     # ==== N-Fold ====
-    for _ in range(num_fold):
+    for i in range(num_fold):
+        print(f"Running Fold: {i}")
         # Train validation split.
         # Note that the order of dataset returned by
         # train_test_split method is odd.
