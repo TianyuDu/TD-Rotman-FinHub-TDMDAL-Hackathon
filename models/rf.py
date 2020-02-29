@@ -53,7 +53,7 @@ if __name__ == "__main__":
         'bootstrap': bootstrap
     }
 
-    DATA_PATH = "/Users/tianyudu/Documents/TD-Rotman-FinHub-TDMDAL-Hackathon/sentiment_data/LMD_data_all_returns.csv"
+    DATA_PATH = "../TD-Rotman-FinHub-TDMDAL-Hackathon/sentiment_data/LMD_data_all_returns.csv"
 
     grid_search(
         scope=random_grid,
