@@ -26,8 +26,8 @@ if __name__ == "__main__":
     random_grid = {
         "kernel": ["rbf"],
         "gamma": ["scale", "auto"],
-        "tol": [10**(-x) for x in range(-10, 0)],
-        "epsilon": [10**(-x) for x in range(-10, 0)]
+        "tol": [10**x for x in range(-10, 0)],
+        "epsilon": [10**x for x in range(-10, 0)]
     }
 
     DATA_PATH = "../sentiment_data/LMD_data_all_returns.csv"
