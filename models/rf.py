@@ -4,6 +4,7 @@ Random Forest
 import argparse
 
 import numpy as np
+import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
 
 from grid_search_util import profile_generator, grid_search
@@ -75,3 +76,4 @@ if __name__ == "__main__":
     rf_random.fit(X, y)
     print("======== Best Parameter ========")
     print(rf_random.best_params_)
+    pd.DataFrame.from_dict(rf_random.cv_results_).to_csv("./rf_results.csv")
