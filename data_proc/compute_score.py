@@ -3,12 +3,8 @@ Computes scores.
 """
 from datetime import datetime
 
-import gensim
 import nltk
-from gensim.utils import simple_preprocess
-from gensim.parsing.preprocessing import STOPWORDS
-from nltk.stem import WordNetLemmatizer, SnowballStemmer
-from nltk.stem.porter import *
+from nltk.stem import WordNetLemmatizer
 
 import numpy as np
 import pandas as pd
@@ -35,13 +31,15 @@ def get_transcript_LMD_score(
     """
     Compute sentiment for each body.
     """
-    body = " ".join(body)
-    tokens = preprocess(body)
+    sentence = " ".join(body)
     counts = dict((k, 0) for k in LMD_hash.keys())
+    tokens = nltk.word_tokenize(sentence)
+    lemmatizer = WordNetLemmatizer()
     for k in counts.keys():
         for w in tokens:
-            c = lemmatizer.lemmatize(w).upper()
-            if c in LMD_hash[k]:
+            w = w.lower()
+            c = lemmatizer.lemmatize(w)
+            if c.upper() in LMD_hash[k]:
                 counts[k] += 1
     return counts
 
