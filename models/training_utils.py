@@ -85,4 +85,4 @@ def training_pipeline(
         "val_acc": np.mean(val_perf_lst["directional_accuracy"]),
         "val_loss": np.mean(val_perf_lst["loss"]),
     }
-    return pref
+    return perf
