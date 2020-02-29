@@ -11,8 +11,15 @@ from sklearn.svm import SVR
 from sklearn import metrics
 
 
-def data_feed(path) -> Tuple[np.ndarray]:
-    
+def data_feed(path: str) -> Tuple[np.ndarray]:
+    df = pd.read_csv(path)
+    X = df[[
+        "Negative", "Positive",
+        "Uncertainty", "Litigious",
+        "StrongModal", "Constraining"
+    ]]
+    y = df["nearest_day_return"]
+    return X, y
 
 
 def training_pipeline(
