@@ -17,8 +17,8 @@ def data_feed(path: str) -> Tuple[np.ndarray]:
         "Negative", "Positive",
         "Uncertainty", "Litigious",
         "StrongModal", "Constraining"
-    ]]
-    y = df["nearest_day_return"]
+    ]].values.astype(np.float32)
+    y = df["nearest_day_return"].values.astype(np.float32)
     return X, y
 
 
