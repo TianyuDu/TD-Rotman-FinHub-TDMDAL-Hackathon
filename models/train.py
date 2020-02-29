@@ -15,7 +15,7 @@ if __name__ == "__main__":
     train_perf, val_perf = training_pipeline(
         model,
         data=(X, y),
-        num_fold=5
+        num_fold=10
     )
     print("Training Performance:")
     print(train_perf)
