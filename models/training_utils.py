@@ -1,7 +1,6 @@
 """
 Training and model evaluation procedures.
 """
-from datetime import datetime
 from typing import List, Tuple, Union
 
 import numpy as np
@@ -10,6 +9,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.svm import SVR
 
 from sklearn import metrics
+
+
+def data_feed(path) -> Tuple[np.ndarray]:
+    
 
 
 def training_pipeline(
@@ -32,9 +35,9 @@ def training_pipeline(
     val_perf = dict()
     # ==== Data Preprocessing ====
     X_train_raw, y_train_raw = data
+    # ==== N-Fold ====
     val_loss_fold = list()
     val_diracc_fold = list()
-    # ==== N-Fold ====
     for _ in range(num_fold):
         # Train validation split.
         # Note that the order of dataset returned by
@@ -53,11 +56,9 @@ def training_pipeline(
         # directional accuracy.
         direction = np.mean(np.sign(pred_val) == np.sign(y_val))
         # loss
-        if task == "regression":
-            error_metric = metrics.mean_squared_error
-        elif task == "classification":
-            error_metric = metrics.log_loss
-        val_perf_lst["loss"].append(error_metric(y_val, pred_val))
+        val_perf_lst["loss"].append(
+            metrics.mean_squared_error(y_val, pred_val)
+        )
         val_perf_lst["directionary_accuracy"].append(direction)
     for k, v in val_perf_lst.items():
         val_perf[k] = np.mean(v)
