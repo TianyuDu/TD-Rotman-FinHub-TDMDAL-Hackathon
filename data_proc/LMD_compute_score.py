@@ -6,6 +6,8 @@ sys.path.append("../")
 
 from datetime import datetime
 
+from typing import Union
+
 import nltk
 from nltk.stem import WordNetLemmatizer
 
@@ -60,7 +62,7 @@ def get_transcript_LMD_score(
 
 
 def generate_dataset(
-    letter_starts: str
+    letter_starts: Union[str, None]
 ) -> pd.DataFrame:
     df_company = pd.read_csv(COMPANY_PATH)
     company_lst = df_company["Ticker symbol"].values.astype(str)
@@ -76,7 +78,7 @@ def generate_dataset(
         "Constraining": [],
     }
     for num, company in enumerate(company_lst):
-        if company.startswith(letter_starts):
+        if company.startswith(letter_starts) or letter_starts is None:
             print(f"Current Company: {company}")
             data = load_individual_transcript(company)
             ids = list(data["title"].keys())
@@ -97,4 +99,5 @@ def generate_dataset(
                     df_collection[k].append(v)
     df = pd.DataFrame.from_dict(df_collection)
     df.to_csv(f"./LMD_company_{letter_starts}.csv")
+    print("Saving dataset", f"./LMD_company_{letter_starts}.csv")
     return df
