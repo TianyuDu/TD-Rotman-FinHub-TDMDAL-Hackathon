@@ -26,8 +26,8 @@ if __name__ == "__main__":
     random_grid = {
         "kernel": ["rbf"],
         "gamma": ["scale", "auto"],
-        "tol": [10**(-x) for x in range(-5, 0)],
-        "epsilon": [10**(-x) for x in range(-5, 0)]
+        "tol": [10**(-x) for x in range(-10, 0)],
+        "epsilon": [10**(-x) for x in range(-10, 0)]
     }
 
     DATA_PATH = "../sentiment_data/LMD_data_all_returns.csv"
@@ -35,7 +35,7 @@ if __name__ == "__main__":
     model = SVR()
     cv = RandomizedSearchCV(
         estimator=model, param_distributions=random_grid,
-        n_iter=100,
+        n_iter=500,
         scoring={
             'neg_mean_squared_error': 'neg_mean_squared_error',
             'acc': make_scorer(directional_accuracy)
