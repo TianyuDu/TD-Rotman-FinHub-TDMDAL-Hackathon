@@ -30,7 +30,8 @@ def get_transcript_LMD_score(
 ) -> np.ndarray:
     """
     Compute sentiment for each body paragraph.
-    Returns a dictionary of six values.
+    Returns a dictionary of six values,
+    counts the number of occurences of each type of words.
     """
     # Combine body.
     sentence = " ".join(body)
