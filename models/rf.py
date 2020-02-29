@@ -36,17 +36,17 @@ if __name__ == "__main__":
     bootstrap = [True, False]
 
     # ==== Smaller Profile ====
-    n_estimators = [10]
-    max_features = ['auto', 'sqrt']
-    # Maximum number of levels in tree
-    max_depth = [10]
-    max_depth.append(None)
-    # Minimum number of samples required to split a node
-    min_samples_split = [10]
-    # Minimum number of samples required at each leaf node
-    min_samples_leaf = [1]
-    # Method of selecting samples for training each tree
-    bootstrap = [True]
+    # n_estimators = [10]
+    # max_features = ['auto', 'sqrt']
+    # # Maximum number of levels in tree
+    # max_depth = [10]
+    # max_depth.append(None)
+    # # Minimum number of samples required to split a node
+    # min_samples_split = [10]
+    # # Minimum number of samples required at each leaf node
+    # min_samples_leaf = [1]
+    # # Method of selecting samples for training each tree
+    # bootstrap = [True]
 
     # Create the random grid
     random_grid = {
@@ -83,4 +83,4 @@ if __name__ == "__main__":
     rf_random.fit(X, y)
     print("======== Best Parameter ========")
     # print(rf_random.best_params_)
-    pd.DataFrame.from_dict(rf_random.cv_results_).to_csv("./rf_results.csv")
+    pd.DataFrame.from_dict(rf_random.cv_results_).to_csv("../model_selection_results/rf_results.csv")
