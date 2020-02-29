@@ -13,6 +13,7 @@ TRANSCRIPT_DIR = "../hackathon_data/company_transcripts/"
 
 def load_individual_transcript(
     company: str,
+    path = TRANSCRIPT_DIR,
     subset: List[str] = None
 ) -> dict:
     path = TRANSCRIPT_DIR + company + ".json"
