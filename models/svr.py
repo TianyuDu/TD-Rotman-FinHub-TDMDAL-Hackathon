@@ -30,7 +30,7 @@ if __name__ == "__main__":
         "epsilon": [10**x for x in range(-10, 0)]
     }
 
-    DATA_PATH = "../sentiment_data/LMD_data_all_returns.csv"
+    DATA_PATH = "../sentiment_data/QA_LMD_data_all_returns.csv"
 
     model = SVR()
     cv = RandomizedSearchCV(

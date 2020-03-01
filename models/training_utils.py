@@ -21,9 +21,22 @@ def data_feed(path: str) -> Tuple[np.ndarray]:
     print(f"{np.mean(np.sum(df.isnull(), axis=1)) * 100: 0.3f}%")
     df = df.dropna()
     X = df[[
-        "Negative", "Positive",
-        "Uncertainty", "Litigious",
-        "StrongModal", "Constraining"
+        "d_Negative",
+        "d_Positive",
+        "d_Uncertainty",
+        "d_Litigious",
+        "d_StrongModal",
+        "d_Constraining",
+        "d_Pos_26",
+        "d_Neg_26",
+        "qa_Negative",
+        "qa_Positive",
+        "qa_Uncertainty",
+        "qa_Litigious",
+        "qa_StrongModal",
+        "qa_Constraining",
+        "qa_Pos_26",
+        "qa_Neg_26",
     ]].values.astype(np.float32)
     y = df["nearest_day_return"].values.astype(np.float32)
     return X, y

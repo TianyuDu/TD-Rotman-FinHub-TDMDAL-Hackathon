@@ -58,7 +58,7 @@ if __name__ == "__main__":
         'bootstrap': bootstrap
     }
 
-    DATA_PATH = "../sentiment_data/LMD_data_all_returns.csv"
+    DATA_PATH = "../sentiment_data/QA_LMD_data_all_returns.csv"
 
     # grid_search(
     #     scope=random_grid,
