@@ -11,11 +11,11 @@ import proc_json
 
 def load_splitted_transcript() -> List[dict]:
     df = pd.read_csv(
-        "./sentiment_data/LMD_data_all_returns.csv"
+        "../sentiment_data/LMD_data_all_returns.csv"
     )
 
     df_compnay = pd.read_csv(
-        "./hackathon_data/companies.csv"
+        "../hackathon_data/companies.csv"
     )
     company_lst = df_compnay["Ticker symbol"].values
 
@@ -36,7 +36,7 @@ def load_splitted_transcript() -> List[dict]:
     failed = 0
     for company in company_lst:
         all_transcript = proc_json.load_individual_transcript(
-            company=company, path="./hackathon_data/company_transcripts/")
+            company=company, path="../hackathon_data/company_transcripts/")
         for transcript_id in all_transcript["title"].keys():
             unique_id = company + "_" + transcript_id
 

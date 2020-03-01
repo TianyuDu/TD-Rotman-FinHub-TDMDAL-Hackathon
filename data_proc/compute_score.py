@@ -1,15 +1,17 @@
 """
 Computes dataset.
 """
+from typing import Union
+
 import numpy as np
 import pandas as pd
 
 import nltk
 from nltk.stem import WordNetLemmatizer
 
-from data_proc.proc_json import load_individual_transcript, convert_time
+from proc_json import load_individual_transcript, convert_time
 
-from split_qa import load_splitted_transcript()
+from split_qa import load_splitted_transcript
 
 
 COMPANY_PATH = "../hackathon_data/companies.csv"
@@ -30,7 +32,20 @@ LMD_hash = dict()
 for k, v in LMD_Dataset.items():
     LMD_hash[k] = list(map(lambda x: x[0], v.values))
 
-SPLITTED_BDOY = load_splitted_transcript()
+D_SPLITTED_BDOY, Q_SPLITTED_BDOY = load_splitted_transcript()
+
+
+TYPES = [
+    "Negative", "Positive",
+    "Uncertainty", "Litigious",
+    "StrongModal", "Constraining"
+]
+
+
+financial_dataset = pd.read_excel(
+    # "/Users/tianyudu/Documents/TD-Rotman-FinHub-TDMDAL-Hackathon/sentiment_data/Finance_Dic.xlsx"
+    "../sentiment_data/Finance_Dic.xlsx"
+)
 
 
 def get_score(
@@ -46,12 +61,13 @@ def get_score(
     # Tokenize.
     tokens = nltk.word_tokenize(body)
     lemmatizer = WordNetLemmatizer()
-    for word_type in counts.keys():
+    for word_type in TYPES:
         for w in tokens:
             w = w.lower()
             c = lemmatizer.lemmatize(w)
             if c.upper() in LMD_hash[word_type]:
-                counts[word_type] += 1
+                counts[prefix + word_type] += 1
+            if c.lower() in 
     return counts
 
 
@@ -90,8 +106,8 @@ def generate_dataset(
                 date = convert_time(t)
 
                 # Compute scores for each part.
-                discussion_part = SPLITTED_BDOY[transcript_code]
-                qa_part = SPLITTED_BDOY[transcript_code]
+                discussion_part = D_SPLITTED_BDOY[transcript_code]
+                qa_part = Q_SPLITTED_BDOY[transcript_code]
 
                 discussion_counts = get_score(discussion_part, prefix="d_")
                 qa_counts = get_score(qa_part, prefix="qa_")
@@ -108,5 +124,5 @@ def generate_dataset(
                     df_collection[k].append(v)
     df = pd.DataFrame.from_dict(df_collection)
     df.to_csv(f"./LMD_company_{letter_starts}.csv")
-    print("Saving dataset", f"./LMD_company_{letter_starts}.csv")
+    print("Saving dataset", f"./LMD_QA_company_{letter_starts}.csv")
     return df
