@@ -42,10 +42,14 @@ TYPES = [
 ]
 
 
+# 26 words.
 financial_dataset = pd.read_excel(
     # "/Users/tianyudu/Documents/TD-Rotman-FinHub-TDMDAL-Hackathon/sentiment_data/Finance_Dic.xlsx"
     "../sentiment_data/Finance_Dic.xlsx"
 )
+
+POS_LST = list(financial_dataset["positive"].values)
+NEG_LST = list(financial_dataset["negative"].values)
 
 
 def get_score(
@@ -58,6 +62,11 @@ def get_score(
     counts the number of occurences of each type of words.
     """
     counts = dict((prefix + k, 0) for k in LMD_hash.keys())
+    counts.update({
+        prefix + "Pos_26": 0,
+        prefix + "Neg_26": 0
+    })
+
     # Tokenize.
     tokens = nltk.word_tokenize(body)
     lemmatizer = WordNetLemmatizer()
@@ -67,7 +76,10 @@ def get_score(
             c = lemmatizer.lemmatize(w)
             if c.upper() in LMD_hash[word_type]:
                 counts[prefix + word_type] += 1
-            if c.lower() in 
+            if c.lower() in POS_LST:
+                counts[prefix + "Pos_26"] += 1
+            if c.lower() in NEG_LST:
+                counts[prefix + "Neg_26"] += 1
     return counts
 
 
@@ -86,12 +98,16 @@ def generate_dataset(
         "d_Litigious": [],
         "d_StrongModal": [],
         "d_Constraining": [],
+        "d_Pos_26": [],
+        "d_Neg_26": [],
         "qa_Negative": [],
         "qa_Positive": [],
         "qa_Uncertainty": [],
         "qa_Litigious": [],
         "qa_StrongModal": [],
         "qa_Constraining": [],
+        "qa_Pos_26": [],
+        "qa_Neg_26": []
     }
 
     for num, company in enumerate(company_lst):
