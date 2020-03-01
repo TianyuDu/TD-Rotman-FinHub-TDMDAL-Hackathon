@@ -139,6 +139,6 @@ def generate_dataset(
                 for k, v in info.items():
                     df_collection[k].append(v)
     df = pd.DataFrame.from_dict(df_collection)
-    df.to_csv(f"./LMD_company_{letter_starts}.csv")
+    df.to_csv(f"./LMD_QA_company_{letter_starts}.csv")
     print("Saving dataset", f"./LMD_QA_company_{letter_starts}.csv")
     return df
