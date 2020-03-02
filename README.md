@@ -12,8 +12,8 @@ Records of quaterly earning calls which are provided as paragraphs(.json) and da
 ### Methodology
 1. We splitted each transcript into the **manager discussion** and **Q&A** parts because they are different in nature.
 2. For each part, we measured the emotions using a **Loughran McDonald dictionary** and a **finance terminology dictionary**. Number of words in different categories(positive, negative, uncertain...) are counted which forms input data to following algorithms.
-3. **Five-fold cross validation** is implemented for each model to find the best configuration(hyperparameters).
-4. **Random forests**, **support vector regressions**, and **XGBoost** are used to predict returns.
+3. **Random forests**, **support vector regressions**, and **XGBoost** are used to predict returns.
+4. **Five-fold cross validation** is implemented to find the best configuration(hyperparameters) and model.
 5. Raw predictions on test set are scaled so that they have the same variance as the training set.
 
 ### Outcome
