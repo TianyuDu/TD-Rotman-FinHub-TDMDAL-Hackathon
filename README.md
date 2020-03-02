@@ -17,6 +17,6 @@ Records of quaterly earning calls(.json) and daily stock returns(.csv) from Feb.
 5. Raw predictions on test set are scaled up so that they have the same variance as the training set.
 
 ### Outcome
-1.The number of negative words in **Q&A** part had quite different distribution than that in **manager discussion** part.
+1.The number of negative words in **Q&A** part had quite **different** distribution than that in **manager discussion** part.
 2.Scaling raw predicted distribution effectively increased prediction accuracy.
-3.Random forest worked best among the three models. It has a 55% accuracy in predicting stock price directions and a mean square error of 0.0016(30% less than linear regression) in predicting returns.
+3.Random forest worked best among the three models. It has a **55% accuracy** in predicting stock price directions and a mean square error of **0.0016**(30% less than linear regression) in predicting returns.
