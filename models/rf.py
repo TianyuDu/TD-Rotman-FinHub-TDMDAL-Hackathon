@@ -67,7 +67,7 @@ if __name__ == "__main__":
     #     training_pipeline=training_pipeline,
     #     log_dir="./rf_grid_result_cv5.csv"
     # )
-    model = rf = RandomForestRegressor()
+    model = RandomForestRegressor()
     rf_random = RandomizedSearchCV(
         estimator=model, param_distributions=random_grid,
         n_iter=100,
